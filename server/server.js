@@ -5,7 +5,7 @@ const io  = require('socket.io')(http);
 const path = require('path');
 
 const PORT = process.env.PORT || 4000;
-const DIST_FOLDER = join(process.cwd(), 'dist');
+const DIST_FOLDER = path.join(process.cwd(), 'dist');
 
 app.use(express.static('./dist'));
 
@@ -13,13 +13,13 @@ app.use(express.static('./dist'));
 //     res.sendFile(path.resolve('dist/socketchat/index.html'));
 // });
 
-app.get('*.*', express.static(join(DIST_FOLDER, 'socketchat')));
+app.get('*.*', express.static(path.join(DIST_FOLDER, 'socketchat')));
 
 app.get('*', (req, res) => {
-    res.render(join(DIST_FOLDER, 'socketchat', 'index.html'), { req });
+    res.render(path.join(DIST_FOLDER, 'socketchat', 'index.html'), { req });
   });
 
-  
+
 io.on('connection', (socket)=> {
 
     console.log('User Connected...');
