@@ -26,10 +26,10 @@ const http = require('http').Server(app);
 const io  = require('socket.io')(http);
 const path = require('path');
 
-app.use(express.static('dist'));
-app.get('*', (req,res) => {
-    res.sendFile('dist/socketchat/index.html')
-})
+// app.use(express.static('dist'));
+// app.get('*', (req,res) => {
+//     res.sendFile('dist/socketchat/index.html')
+// })
 
 io.on('connection', (socket)=> {
 
