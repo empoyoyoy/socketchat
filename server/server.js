@@ -5,10 +5,10 @@ const io  = require('socket.io')(http);
 const path = require('path');
 
 
-app.use(express.static(__dirname + '/dist/socketchat'));
+app.use(express.static('./dist'));
 
-app.get('/*', function(req,res) {
-    res.sendFile(path.join(__dirname+'/dist/socketchat/index.html'));
+app.get('*', function(req,res) {
+    res.sendFile(path.resolve('dist/socketchat/index.html'));
 });
 
 
