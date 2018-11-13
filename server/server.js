@@ -18,7 +18,7 @@ app.get('*', (req, res) => {
     res.render(path.join(DIST_FOLDER, 'socketchat', 'index.html'), { req });
   });
 
-
+ 
 io.on('connection', (socket)=> {
 
     console.log('User Connected...');
