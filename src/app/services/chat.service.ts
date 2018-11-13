@@ -9,7 +9,8 @@ import * as io from '../../../node_modules/socket.io-client/dist/socket.io.js';
   providedIn: 'root'
 })
 export class ChatService {
-  private url = 'http://localhost:5000/';
+  private url = 'https://socketchat-demo.herokuapp.com:5000/';
+  // private url = 'http://localhost:5000/';
   private socket:any;
 
   sendMessage(message:string, username:string){
