@@ -1,25 +1,79 @@
-<hr>
-<form [formGroup]="signupForm" >
-    <div class="md-form">
-        <input mdbInputDirective type="text" id="form1" class="form-control" formControlName="username">
-        <label for="form1" class="">User Name</label>
-        <div class="md-form">
-          <textarea 
-            mdbInputDirective 
-            type="text" 
-            id="form76" 
-            class="md-textarea form-control" 
-            rows="3" 
-            formControlName="chatmessage"
-            (keyup)="sendMessage($event)"
-            ></textarea>
-          <label for="form76">Enter message</label>
-        </div>
+
+<div class="row">
+    <div class="col-2">
+      <p *ngIf="username"> Welcome to Socketiochat!! <br> <label for="">{{username}}</label></p>
+      <!-- 
+      <button 
+        *ngIf="username" 
+        type="button" 
+        mdbBtn color="primary" 
+        class="waves-light" 
+        data-toggle="modal" 
+        data-target="#basicExample" 
+        (click)="frame.show()"
+        mdbWavesEffect>Update Nickname</button> -->
       </div>
-</form>
+      <div class="col">
+      <div *ngFor="let message of messages">
+          {{message.username}}: {{message.text}}
+         </div>
+  </div>
+</div>
+
+<div class="row">
+    <div class="col-2">
+      Connected Users: {{onlineUsers}}
+      <div *ngFor="let user of users">
+          {{user.username}}
+         </div>
+      </div>
+      <div class="col">
+      <form [formGroup]="signupForm" >
+  
+          <!-- <input mdbInputDirective type="text" id="form1" class="form-control" formControlName="username">
+          <label for="form1" class="">User Name</label> -->
+          
+          <div class="md-form">
+            <textarea 
+              mdbInputDirective 
+              type="text" 
+              id="form76" 
+              class="md-textarea form-control" 
+              rows="3" 
+              formControlName="chatmessage"
+              (keyup)="sendMessage($event)"
+              ></textarea>
+            <label for="form76">Enter message</label>
+          </div>
+        </form>
+  </div>
+</div>
 
 <hr>
 
-<div *ngFor="let message of messages">
- {{message.username}}: {{message.text}}
+
+
+<div mdbModal #frame="mdbModal" class="modal fade top" id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true" [config]="{backdrop: true, ignoreBackdropClick: true}">
+  <div class="modal-dialog modal-sm modal-notify modal-info" role="document">
+    <div class="modal-content text-center">
+      <div class="modal-header d-flex justify-content-center">
+        <p class="heading">Welcome to SocketChatIO!!</p>
+      </div>
+
+      <div class="modal-body">
+        <i class="fa fa-handshake-o fa-4x animated rotateIn"></i>
+      </div>
+
+      <div class="modal-footer flex-center">
+        <form [formGroup]="usernameform">
+          <div class="md-form">
+            <input mdbInputDirective type="text" id="Username" class="form-control" formControlName="username">
+            <label for="Username" class="">Please Enter Nickname</label>
+            <button type="button" mdbBtn color="primary" (click)="startChat()" [disabled]="!usernameform.valid" class="relative waves-light" mdbWavesEffect>Start Chatting</button>
+          </div>
+        </form>        
+      </div>
+    </div>
+  </div>
 </div>

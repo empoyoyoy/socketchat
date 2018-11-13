@@ -1,7 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from '@angular/forms';
 import { ChatService } from '../../services/chat.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { ModalDirective } from 'angular-bootstrap-md';
 
 
 @Component({
@@ -9,14 +10,21 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss']
 })
-export class ChatComponent implements OnInit, OnDestroy {
+export class ChatComponent implements OnInit, OnDestroy,AfterViewInit {
+  @ViewChild('frame') basicModal: ModalDirective;
+
   messages: any = [];
+  users: any = [];
   signupForm: FormGroup;
+  usernameform: FormGroup;
   chatmessage:string;
   username:string;
   connection :any;
+  connection2 : any;
   alert: any = false;
   profile:any;
+
+  onlineUsers:number;
 
   constructor(
     private _chatservice: ChatService,
@@ -25,6 +33,24 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.initformval(null,null);
+    this._chatservice.onlineUsers()
+      .subscribe(
+        (data)=>{
+          //this.onlineUsers = +data;
+          console.log(data);
+        }
+      )
+
+//    console.log(this._chatservice.onlineUsers());
+
+    this._chatservice.getUsersConnected()
+      .subscribe(
+        user => {
+          console.log(user['username']);
+          this.users.push(user);
+          this.onlineUsers  = (this.users).length;
+        });
+
     this.connection = this._chatservice.getMessages().subscribe(
       message => {
         console.log(message);
@@ -43,7 +69,25 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   }
 
+  startChat(){
+    this.basicModal.hide();
+    this.username = this.usernameform.value['username'];
+    this._chatservice.userConnect(this.username);
+  }
+
+  ngAfterViewInit() {
+    this.basicModal.show();
+  }
+
   ngOnDestroy(){
+    // this._chatservice.userLeave(this.username);
+    // this._chatservice.getUsersConnected()
+    //   .subscribe(
+    //     user => {
+    //       console.log(user['username']);
+    //       // this.users.push(user);
+    //       // this.onlineUsers  = (this.users).length;
+    //     });
     this.connection.unsubscribe();
   }
 
@@ -51,7 +95,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     if (event.key === "Enter") {
       console.log(event);
       this.chatmessage = this.signupForm.value['chatmessage'];
-      this.username = this.signupForm.value['username'];
+      
 
       this._chatservice.sendMessage(this.chatmessage,this.username);
       this._chatservice.setUsername(this.username);
@@ -66,6 +110,9 @@ export class ChatComponent implements OnInit, OnDestroy {
   initformval(message,username){
     this.signupForm = new FormGroup({
       'chatmessage' : new FormControl(message,Validators.required),
+      'username' : new FormControl(username,Validators.required)
+    })
+    this.usernameform = new FormGroup({
       'username' : new FormControl(username,Validators.required)
     })
   }

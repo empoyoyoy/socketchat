@@ -18,18 +18,36 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(DIST_FOLDER, 'socketchat/index.html'));
   });
 
- 
-io.on('connection', (socket)=> {
 
-    console.log('User Connected...');
+let numberOfOnlineUsers = 0;
+let users = [];
+  
+io.on('connection', (socket)=> {
+    
+    numberOfOnlineUsers++;
+    io.emit('numberOfOnlineUsers',numberOfOnlineUsers);
+
+    console.log(numberOfOnlineUsers);
     
     socket.on('disconnect', () => {
+        numberOfOnlineUsers--;
+        io.emit('numberOfOnlineUsers',numberOfOnlineUsers);
         console.log('User Disconnected...');
     });
 
     socket.on('add-message', (message, username)=>{
         io.emit('message', {type: 'new-message', text: message, username: username})
-    })
+    });
+
+    socket.on('user-connect', (username)=>{
+        // users.push(username)
+        io.emit('user', {type: 'new-user',username: username});
+    });
+
+    // socket.on('user-leave', (username)=>{
+    //     user.splice(username,1)
+    //     io.emit('user', {type: 'new-user',username: user});
+    // });
 });
 
 const port = process.env.PORT || '5000';
