@@ -29,7 +29,6 @@ import { AuthService } from './services/auth.service';
     MDBBootstrapModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
-    BrowserModule.withServerTransition({appId: 'my-app'})
   ],
   providers: [
     ChatService, 
