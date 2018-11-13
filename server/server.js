@@ -12,7 +12,7 @@ const DIST_FOLDER = path.join(process.cwd(), './dist');
 //     res.sendFile(path.resolve('dist/socketchat/index.html'));
 // });
 
-app.get('*.*', express.static(path.join(DIST_FOLDER, 'socketchat')));
+app.use( express.static(path.join(DIST_FOLDER, 'socketchat')));
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(DIST_FOLDER, 'socketchat/index.html'));
