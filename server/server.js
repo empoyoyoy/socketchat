@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 4000;
 const DIST_FOLDER = path.join(process.cwd(), 'dist');
 
 app.use(express.static('./dist'));
-
+ 
 // app.get('*', function(req,res) {
 //     res.sendFile(path.resolve('dist/socketchat/index.html'));
 // });
