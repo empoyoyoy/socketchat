@@ -31,12 +31,11 @@ const path = require('path');
 //     res.sendFile('dist/socketchat/index.html')
 // })
 
+app.use(express.static(path.join(__dirname, './dist')));
+//app.use(express.static(__dirname + '/dist/socketchat'));
 
-app.use(express.static(__dirname + '/dist/socketchat'));
-
-app.get('/*', function(req,res) {
-    
-res.sendFile(path.join(__dirname+'/dist/socketchat/index.html'));
+app.get('/*', function(req,res) {    
+    res.sendFile(path.join(__dirname + '/dist/socketchat/index.html'));
 });
 
 
