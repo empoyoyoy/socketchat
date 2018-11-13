@@ -26,9 +26,9 @@ const http = require('http').Server(app);
 const io  = require('socket.io')(http);
 const path = require('path');
 
-app.use(express.static(path.join('../dist')));
+app.use(express.static('../dist'));
 app.get('*', (req,res) => {
-    res.sendFile(path.join('../dist/socketchat/index.html'))
+    res.sendFile('../dist/socketchat/index.html')
 })
 
 io.on('connection', (socket)=> {
