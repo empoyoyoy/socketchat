@@ -15,7 +15,7 @@ const DIST_FOLDER = path.join(process.cwd(), './dist');
 app.get('*.*', express.static(path.join(DIST_FOLDER, 'socketchat')));
 
 app.get('*', (req, res) => {
-    res.sendFile(path.join(DIST_FOLDER, 'socketchat', 'index.html'), { req });
+    res.sendFile(path.join(DIST_FOLDER, 'socketchat', 'index.html'));
   });
 
  
