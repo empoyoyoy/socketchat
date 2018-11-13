@@ -26,9 +26,9 @@ const http = require('http').Server(app);
 const io  = require('socket.io')(http);
 const path = require('path');
 
-app.use(express.static('../dist'));
+app.use(express.static('dist'));
 app.get('*', (req,res) => {
-    res.sendFile('../dist/socketchat/index.html')
+    res.sendFile('dist/socketchat/index.html')
 })
 
 io.on('connection', (socket)=> {
@@ -48,4 +48,4 @@ const port = process.env.PORT || '5000';
 app.set('port',port);
 
 const server = http;
-server.listen(port,() => console.log('running hahahaha'));
+server.listen(port,() => console.log(__dirname));
