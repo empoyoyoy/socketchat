@@ -1,6 +1,7 @@
 {
   "name": "socketchat",
   "version": "0.0.0",
+  "main": "server/server.js",
   "scripts": {
     "ng": "ng",
     "start": "node server/server.js",
