@@ -34,9 +34,9 @@ const path = require('path');
 app.use(express.static(path.join(__dirname, './dist')));
 //app.use(express.static(__dirname + '/dist/socketchat'));
 
-// app.get('/*', function(req,res) {    
-//     res.sendFile(path.join(__dirname + '/dist/socketchat/index.html'));
-// });
+app.get('/*', function(req,res) {    
+    res.sendFile(path.join(__dirname, './dist/socketchat/index.html'));
+});
 
 
 io.on('connection', (socket)=> {
