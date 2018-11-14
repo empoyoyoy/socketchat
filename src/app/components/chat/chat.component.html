@@ -1,4 +1,3 @@
-
 <div class="row">
     <div class="col-2">
       <p *ngIf="username"> Welcome to Socketiochat!! <br> <label for="">{{username}}</label></p>
@@ -14,25 +13,29 @@
         mdbWavesEffect>Update Nickname</button> -->
       </div>
       <div class="col">
-      <div *ngFor="let message of messages">
-          {{message.username}}: {{message.text}}
-         </div>
-  </div>
+         <mdb-card>
+          <mdb-card-body style="height:300px;overflow-y: scroll;">
+            <div *ngFor="let message of messages">
+              {{message.username}}: {{message.text}}
+             </div>
+          </mdb-card-body>
+        </mdb-card>
+    </div>
 </div>
 
 <div class="row">
-    <div class="col-2">
-      Connected Users: {{onlineUsers}}
-      <div *ngFor="let user of users">
-          {{user.username}}
-         </div>
+      <div class="col-2">
+        <ul class="list-group">
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            Online<span class="badge badge-primary badge-pill">{{onlineUsers}}</span>
+          </li>
+        </ul>
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let user of users">{{user.username}}</li>
+        </ul>
       </div>
       <div class="col">
-      <form [formGroup]="signupForm" >
-  
-          <!-- <input mdbInputDirective type="text" id="form1" class="form-control" formControlName="username">
-          <label for="form1" class="">User Name</label> -->
-          
+         <form [formGroup]="signupForm" >
           <div class="md-form">
             <textarea 
               mdbInputDirective 
@@ -46,10 +49,8 @@
             <label for="form76">Enter message</label>
           </div>
         </form>
-  </div>
+    </div>
 </div>
-
-<hr>
 
 
 

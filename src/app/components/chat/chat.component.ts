@@ -33,21 +33,12 @@ export class ChatComponent implements OnInit, OnDestroy,AfterViewInit {
 
   ngOnInit() {
     this.initformval(null,null);
-    this._chatservice.onlineUsers()
-      .subscribe(
-        (data)=>{
-          //this.onlineUsers = +data;
-          console.log(data);
-        }
-      )
-
-//    console.log(this._chatservice.onlineUsers());
 
     this._chatservice.getUsersConnected()
       .subscribe(
         user => {
           console.log(user['username']);
-          this.users.push(user);
+          this.users = user['username'];
           this.onlineUsers  = (this.users).length;
         });
 
@@ -80,14 +71,6 @@ export class ChatComponent implements OnInit, OnDestroy,AfterViewInit {
   }
 
   ngOnDestroy(){
-    // this._chatservice.userLeave(this.username);
-    // this._chatservice.getUsersConnected()
-    //   .subscribe(
-    //     user => {
-    //       console.log(user['username']);
-    //       // this.users.push(user);
-    //       // this.onlineUsers  = (this.users).length;
-    //     });
     this.connection.unsubscribe();
   }
 

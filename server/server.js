@@ -21,6 +21,7 @@ app.get('*', (req, res) => {
 
 let numberOfOnlineUsers = 0;
 let users = [];
+
   
 io.on('connection', (socket)=> {
     
@@ -32,7 +33,10 @@ io.on('connection', (socket)=> {
     socket.on('disconnect', () => {
         numberOfOnlineUsers--;
         io.emit('numberOfOnlineUsers',numberOfOnlineUsers);
+        users = users.filter(data => data.id !== socket.id)
         console.log('User Disconnected...');
+//        console.log(users);
+        io.emit('user', {type: 'new-user',username: users});
     });
 
     socket.on('add-message', (message, username)=>{
@@ -40,14 +44,10 @@ io.on('connection', (socket)=> {
     });
 
     socket.on('user-connect', (username)=>{
-        // users.push(username)
-        io.emit('user', {type: 'new-user',username: username});
+        users.push({"id":socket.id,"username":username})
+        io.emit('user', {type: 'new-user',username: users});
     });
 
-    // socket.on('user-leave', (username)=>{
-    //     user.splice(username,1)
-    //     io.emit('user', {type: 'new-user',username: user});
-    // });
 });
 
 const port = process.env.PORT || '5000';
