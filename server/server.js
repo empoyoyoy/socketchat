@@ -23,29 +23,36 @@ let numberOfOnlineUsers = 0;
 let users = [];
 
   
-io.on('connection', (socket)=> {
-    
+io.on('connection', (socket)=> {    
     numberOfOnlineUsers++;
     io.emit('numberOfOnlineUsers',numberOfOnlineUsers);
 
     console.log(numberOfOnlineUsers);
+
+    socket.on('sender-info', function(username){
+        socket.emit('sender-id', {type: 'new-sender',username: username,id: socket.id});
+    });
     
     socket.on('disconnect', () => {
         numberOfOnlineUsers--;
         io.emit('numberOfOnlineUsers',numberOfOnlineUsers);
         users = users.filter(data => data.id !== socket.id)
         console.log('User Disconnected...');
-//        console.log(users);
         io.emit('user', {type: 'new-user',username: users});
     });
 
-    socket.on('add-message', (message, username)=>{
-        io.emit('message', {type: 'new-message', text: message, username: username})
+    socket.on('setid', (username)=>{
+        io.emit('user-info', {type: 'user-id',username: username,id: socket.id});
+    });
+
+    socket.on('add-message', (message, username,userid)=>{
+        io.emit('message', {type: 'new-message', text: message, username: username,id: socket.id})
     });
 
     socket.on('user-connect', (username)=>{
         users.push({"id":socket.id,"username":username})
-        io.emit('user', {type: 'new-user',username: users});
+        io.emit('user', {type: 'new-user',username: users,id: socket.id});
+       
     });
 
 });

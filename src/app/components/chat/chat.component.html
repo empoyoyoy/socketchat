@@ -1,40 +1,59 @@
 <div class="row">
-    <div class="col-2">
-      <p *ngIf="username"> Welcome to Socketiochat!! <br> <label for="">{{username}}</label></p>
-      <!-- 
-      <button 
-        *ngIf="username" 
-        type="button" 
-        mdbBtn color="primary" 
-        class="waves-light" 
-        data-toggle="modal" 
-        data-target="#basicExample" 
-        (click)="frame.show()"
-        mdbWavesEffect>Update Nickname</button> -->
-      </div>
-      <div class="col">
+  <div class="col-md-12">
+    <!-- <p *ngIf="username"> Welcome to Socketiochat!!<label for="">{{username}}</label></p> -->
+    <blockquote class="blockquote text-center">
+      <p class="mb-0">Hi <strong>{{username}}</strong> Welcome to Socketiochat</p>
+      <!-- <footer class="blockquote-footer mb-3">Someone famous in <cite title="Source Title">Source Title</cite></footer> -->
+    </blockquote>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <ul class="list-group" *ngIf="username">
+      <li class="list-group-item d-flex justify-content-between align-items-center" text-center>
+        Connected Users<span class="badge badge-primary badge-pill">{{onlineUsers}}</span>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="row">
+    <!-- <div class="col-md-2">
+      
+    
+      </div> -->
+      <div class="col-md-12">
          <mdb-card>
           <mdb-card-body style="height:300px;overflow-y: scroll;">
-            <div *ngFor="let message of messages">
-              {{message.username}}: {{message.text}}
-             </div>
+            <div *ngIf="username">               
+                <div  *ngFor="let message of messages">
+                  <div *ngIf="userid == message.id">
+                    <p class="text-right"><strong>You :</strong> {{message.text}}</p>
+                  </div>
+
+                  <div *ngIf="!(userid == message.id)">
+                    <p class="text-left"><strong>{{message.username}} :</strong> {{message.text}}</p>
+                  </div>
+                  
+                </div>
+            </div>
+            
           </mdb-card-body>
         </mdb-card>
     </div>
 </div>
 
 <div class="row">
-      <div class="col-2">
+      <!-- <div class="col-md-2">
         <ul class="list-group">
           <li class="list-group-item d-flex justify-content-between align-items-center">
             Online<span class="badge badge-primary badge-pill">{{onlineUsers}}</span>
           </li>
         </ul>
         <ul class="list-group">
-          <li class="list-group-item" *ngFor="let user of users">{{user.username}}</li>
+          <li class="list-group-item" *ngFor="let user of users">{{ ((user.username).length>6)? (user.username | slice:0:6)+'..':(user.username) }}</li>
         </ul>
-      </div>
-      <div class="col">
+      </div> -->
+      <div class="col-md-12">
          <form [formGroup]="signupForm" >
           <div class="md-form">
             <textarea 
@@ -44,7 +63,7 @@
               class="md-textarea form-control" 
               rows="3" 
               formControlName="chatmessage"
-              (keyup)="sendMessage($event)"
+              (keyup)="sendMessage($event,userid)"
               ></textarea>
             <label for="form76">Enter message</label>
           </div>
@@ -54,8 +73,8 @@
 
 
 
-<div mdbModal #frame="mdbModal" class="modal fade top" id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-  aria-hidden="true" [config]="{backdrop: true, ignoreBackdropClick: true}">
+<div mdbModal #frame="mdbModal" class="modal fade top" id="frameModalTop" data-keyboard="true" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true" [config]="{backdrop: true, ignoreBackdropClick: true, keyboard:false}">
   <div class="modal-dialog modal-sm modal-notify modal-info" role="document">
     <div class="modal-content text-center">
       <div class="modal-header d-flex justify-content-center">
@@ -69,8 +88,8 @@
       <div class="modal-footer flex-center">
         <form [formGroup]="usernameform">
           <div class="md-form">
-            <input mdbInputDirective type="text" id="Username" class="form-control" formControlName="username">
-            <label for="Username" class="">Please Enter Nickname</label>
+            <input mdbInputDirective type="text" id="Username" class="form-control" data-error="Invalid Nickname" data-success="Valid Nickname" formControlName="username">
+            <label for="Username" class="">Please Enter 10 Character Nickname</label>
             <button type="button" mdbBtn color="primary" (click)="startChat()" [disabled]="!usernameform.valid" class="relative waves-light" mdbWavesEffect>Start Chatting</button>
           </div>
         </form>        
