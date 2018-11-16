@@ -80,9 +80,11 @@ export class ChatComponent implements OnInit, OnDestroy,AfterViewInit {
   sendMessage(event,userid){
     
     if (event.key === "Enter") {
-      console.log('send message');
-      console.log(userid);
-  //    console.log(event);
+      // let dateFormat = require('dateformat');
+       //let now = new Date().toLocaleString()
+      // let nw = dateFormat(now, "dddd, mmmm dS, yyyy, h:MM:ss TT");      
+
+       //console.log(now);
       this.chatmessage = this.signupForm.value['chatmessage'];
       
 
@@ -91,7 +93,8 @@ export class ChatComponent implements OnInit, OnDestroy,AfterViewInit {
       this.chatmessage = '';
       this.initformval(this.chatmessage,this.username);
 
-      console.log(this.username);
+
+
     }
     
   }

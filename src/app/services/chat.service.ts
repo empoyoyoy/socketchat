@@ -10,7 +10,7 @@ import * as io from '../../../node_modules/socket.io-client/dist/socket.io.js';
 })
 export class ChatService {
   private url = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port; //enable in deploy
-//  private url = 'http://localhost:5000/'; //enable in development
+  // private url = 'http://localhost:5000/'; //enable in development
   private socket:any;
 
   sendMessage(message:string, username:string, userid:string){

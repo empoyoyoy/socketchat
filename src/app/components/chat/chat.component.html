@@ -23,19 +23,42 @@
       </div> -->
       <div class="col-md-12">
          <mdb-card>
-          <mdb-card-body style="height:300px;overflow-y: scroll;">
-            <div *ngIf="username">               
-                <div  *ngFor="let message of messages">
-                  <div *ngIf="userid == message.id">
-                    <p class="text-right"><strong>You :</strong> {{message.text}}</p>
-                  </div>
+          <mdb-card-body style="height:200px;overflow-y: scroll;">
 
-                  <div *ngIf="!(userid == message.id)">
-                    <p class="text-left"><strong>{{message.username}} :</strong> {{message.text}}</p>
-                  </div>
-                  
-                </div>
-            </div>
+            <div class="chat-message" *ngIf="username">
+
+              <ul class="list-unstyled chat" *ngFor="let message of messages">
+                  <li class="d-flex justify-content-between mb-8" *ngIf="userid == message.id">
+                      <!-- <img  alt="avatar" class="avatar rounded-circle d-flex align-self-start mr-2 z-depth-1"> -->
+                      <p></p>
+                      <div class="chat-body white p-3 ml-2 z-depth-1" style="width: 300px;">
+                          <div class="header">
+                              <strong class="primary-font">You</strong>
+                              <small class="pull-right text-muted"><i class="fa fa-clock-o"></i> 12 mins ago</small>
+                          </div>
+                          <hr class="w-100">
+                          <p class="mb-0">
+                            {{message.text}}
+                          </p>
+                      </div>
+                  </li>
+                  <li class="d-flex justify-content-between mb-8" *ngIf="!(userid == message.id)"> 
+                      <div class="chat-body white p-3 z-depth-1" style="width: 300px;">
+                          <div class="header">
+                              <strong class="primary-font">{{message.username}}</strong>
+                              <small class="pull-right text-muted"><i class="fa fa-clock-o"></i> 13 mins ago</small>
+                          </div>
+                          <hr class="w-100">
+                          <p class="mb-0">
+                            {{message.text}}
+                          </p>
+                      </div>
+                      <p></p>
+                      <!-- <img  alt="avatar" class="avatar rounded-circle d-flex align-self-start ml-2 z-depth-1"> -->
+                  </li>
+              </ul>
+
+          </div>
             
           </mdb-card-body>
         </mdb-card>
@@ -74,7 +97,8 @@
 
 
 <div mdbModal #frame="mdbModal" class="modal fade top" id="frameModalTop" data-keyboard="true" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-  aria-hidden="true" [config]="{backdrop: true, ignoreBackdropClick: true, keyboard:false}">
+  aria-hidden="true" [config]="{backdrop: true, ignoreBackdropClick: true, keyboard:false}"> 
+  <!-- keyboard:false -->
   <div class="modal-dialog modal-sm modal-notify modal-info" role="document">
     <div class="modal-content text-center">
       <div class="modal-header d-flex justify-content-center">
@@ -97,3 +121,4 @@
     </div>
   </div>
 </div>
+
